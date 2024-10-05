@@ -18,19 +18,19 @@ function Login ({ onLogin }){
     onLogin(userData);
   }
 
-  function onLogin({ email, password }) {
-    auth
-        .login(email, password)
-        .then((res) => {
-          setIsLoggedIn(true);
-          setEmail(email);
-          history.push("/");
-        })
-        .catch((err) => {
-          setTooltipStatus("fail");
-          setIsInfoToolTipOpen(true);
-        });
-  }
+  // function onLogin({ email, password }) {
+  //   auth
+  //       .login(email, password)
+  //       .then((res) => {
+  //         setIsLoggedIn(true);
+  //         setEmail(email);
+  //         history.push("/");
+  //       })
+  //       .catch((err) => {
+  //         setTooltipStatus("fail");
+  //         setIsInfoToolTipOpen(true);
+  //       });
+  // }
 
   return (
     <div className="auth-form">
