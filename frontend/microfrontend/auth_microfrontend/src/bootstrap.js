@@ -3,13 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from "./components/Login";
 import Register from "./components/Register";
-import {BrowserRouter, useHistory, Route, Switch, Redirect} from "react-router-dom";
+import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 
 export function setIsLoggedIn(b) {}
 export function setEmail(b) {}
-export function goPath(b) {
-    //
-}
+export function goPath(b) {}
 
 
 ReactDOM.render(
@@ -32,5 +30,3 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
-//ReactDOM.render(<Login setIsLoggedIn={setIsLoggedIn} setEmail={setEmail} goPath={goPath}/>, document.getElementById("root"));
-//ReactDOM.render(<Register goPath={goPath}/>, document.getElementById("root"));
