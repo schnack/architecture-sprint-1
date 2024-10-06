@@ -3,11 +3,13 @@ import { Route, useHistory, Switch } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import api from "../utils/api";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
+
+import { CurrentUserContext } from 'shared-context_shared-library';
 
 const Login = React.lazy(() => import("auth_microfrontend/Login"));
 const Register = React.lazy(() => import("auth_microfrontend/Register"));
+const Main = React.lazy(() => import("main_microfrontend/Main"));
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -155,6 +157,8 @@ function App() {
           <ProtectedRoute
             exact
             path="/"
+            component={Main}
+            goPath={goPath}
             loggedIn={isLoggedIn}
           />
           <Route path="/signup">
@@ -164,7 +168,7 @@ function App() {
           </Route>
           <Route path="/signin">
             <Suspense fallback={"loading..."}>
-              <Login setIsLoggedIn={setIsLoggedIn} setEmail={setEmail} goPath={goPath}/>
+              <Login setIsLoggedIn={setIsLoggedIn} setGlobalEmail={setEmail} goPath={goPath}/>
             </Suspense>
           </Route>
         </Switch>

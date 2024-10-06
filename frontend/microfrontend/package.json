@@ -4,7 +4,10 @@
   "workspaces": {
     "packages": [
       "host_microfrontend",
-      "auth_microfrontend"
+      "auth_microfrontend",
+      "shared_microfrontend",
+      "main_microfrontend",
+      "profile_microfrontend"
     ]
   },
   "scripts": {

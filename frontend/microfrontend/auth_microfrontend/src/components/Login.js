@@ -29,7 +29,7 @@ function Login ({ setIsLoggedIn, setGlobalEmail, goPath }) {
         .then((res) => {
           setIsLoggedIn(true);
           setGlobalEmail(email);
-          goPath("/")
+          goPath("/");
         })
         .catch((err) => {
           setTooltipStatus("fail");

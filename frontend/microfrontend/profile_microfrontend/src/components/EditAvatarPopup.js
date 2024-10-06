@@ -1,5 +1,10 @@
 import React from 'react';
-import PopupWithForm from './PopupWithForm';
+
+import '../styles/popup/popup.css';
+import '../styles/popup/_is-opened/popup_is-opened.css'
+
+const PopupWithForm = React.lazy(() => import("shared_microfrontend/PopupWithForm"));
+
 
 function EditAvatarPopup({ isOpen, onUpdateAvatar, onClose }) {
   const inputRef = React.useRef();

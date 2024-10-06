@@ -1,14 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
-const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
 
 module.exports = {
     entry: './src/index',
     mode: 'development',
     devServer: {
         static: path.join(__dirname, 'public'),
-        port: 3001,
+        port: 3004,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
@@ -19,11 +18,6 @@ module.exports = {
         publicPath: 'auto',
     },
     devtool: 'cheap-module-source-map',
-    resolve: {
-        alias: {
-            'shared-context_shared-library': path.resolve(__dirname, '../shared-library'),
-        },
-    },
     module: {
         rules: [
             {
@@ -45,23 +39,15 @@ module.exports = {
         ],
     },
     plugins: [
+        // To learn more about the usage of this plugin, please visit https://webpack.js.org/plugins/module-federation-plugin/
         new ModuleFederationPlugin({
-            name: "host_microfrontend",
-            remotes: {
-                auth_microfrontend: "auth_microfrontend@http://localhost:3002/remoteEntry.js",
-                main_microfrontend: "main_microfrontend@http://localhost:3003/remoteEntry.js",
+            name: 'shared_microfrontend',
+            filename: 'remoteEntry.js',
+            exposes: {
+                './PopupWithForm': './src/components/PopupWithForm',
             },
-            shared: {
-                react: {singleton: true},
-                "react-dom": {singleton: true},
-                'react-router-dom': { singleton: true },
-                'shared-context_shared-library': {
-                    import: 'shared-context_shared-library',
-                    requiredVersion: require('../shared-library/package.json').version,
-                },
-            },
+            shared: { react: { singleton: true }, 'react-dom': { singleton: true }, 'react-router-dom': { singleton: true }},
         }),
-        new ExternalTemplateRemotesPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
         }),

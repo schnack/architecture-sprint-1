@@ -1,6 +1,12 @@
 import React from 'react';
-import PopupWithForm from './PopupWithForm';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
+import { CurrentUserContext } from 'shared-context_shared-library';
+
+import '../styles/popup/popup.css';
+import '../styles/popup/_is-opened/popup_is-opened.css'
+
+const PopupWithForm = React.lazy(() => import("shared_microfrontend/PopupWithForm"));
+
 
 function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
   const [name, setName] = React.useState('');

@@ -1,14 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
-const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
 
 module.exports = {
     entry: './src/index',
     mode: 'development',
     devServer: {
         static: path.join(__dirname, 'public'),
-        port: 3001,
+        port: 3005,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
@@ -45,15 +44,19 @@ module.exports = {
         ],
     },
     plugins: [
+        // To learn more about the usage of this plugin, please visit https://webpack.js.org/plugins/module-federation-plugin/
         new ModuleFederationPlugin({
-            name: "host_microfrontend",
+            name: 'profile_microfrontend',
+            filename: 'remoteEntry.js',
+            exposes: {
+                './Profile': './src/components/Profile',
+            },
             remotes: {
-                auth_microfrontend: "auth_microfrontend@http://localhost:3002/remoteEntry.js",
-                main_microfrontend: "main_microfrontend@http://localhost:3003/remoteEntry.js",
+                shared_microfrontend: "shared_microfrontend@http://localhost:3004/remoteEntry.js",
             },
             shared: {
-                react: {singleton: true},
-                "react-dom": {singleton: true},
+                react: { singleton: true },
+                'react-dom': { singleton: true },
                 'react-router-dom': { singleton: true },
                 'shared-context_shared-library': {
                     import: 'shared-context_shared-library',
@@ -61,7 +64,6 @@ module.exports = {
                 },
             },
         }),
-        new ExternalTemplateRemotesPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
         }),
