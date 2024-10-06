@@ -2,6 +2,9 @@ import React from 'react';
 import SuccessIcon from '../images/success-icon.svg';
 import ErrorIcon from '../images/error-icon.svg';
 
+import '../styles/popup/popup.css';
+import '../styles/popup/_is-opened/popup_is-opened.css'
+
 function InfoTooltip({ isOpen, onClose, status }) {
   const icon = status === 'success' ? SuccessIcon : ErrorIcon
   const text = status === 'success' ? "Вы успешно зарегистрировались" : 

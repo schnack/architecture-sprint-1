@@ -27,9 +27,9 @@ module.exports = {
                 use: ["style-loader", "css-loader"],
             },
             {
-                test: /\.svg$/,
-                loader: 'svg-inline-loader'
-            }
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource",
+            },
         ],
     },
     plugins: [
@@ -40,8 +40,6 @@ module.exports = {
             exposes: {
                 './Login': './src/components/Login',
                 './Register': './src/components/Register',
-                // TODO Пока не понятно надо ли экспортировать
-                './InfoTooltip': './src/components/InfoTooltip',
             },
             shared: { react: { singleton: true }, 'react-dom': { singleton: true } , 'react-router-dom': { singleton: true } },
         }),

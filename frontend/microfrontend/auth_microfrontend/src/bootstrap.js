@@ -2,8 +2,35 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Login from "./components/Login";
+import Register from "./components/Register";
+import {BrowserRouter, useHistory, Route, Switch, Redirect} from "react-router-dom";
 
-export default function onLogin({ email, password }) {}
+export function setIsLoggedIn(b) {}
+export function setEmail(b) {}
+export function goPath(b) {
+    //
+}
 
 
-ReactDOM.render(<Login onLogin={onLogin}/>, document.getElementById("root"));
+ReactDOM.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/">
+                    {
+                        () => <Redirect to="/signup" />
+                    }
+                </Route>
+                <Route path="/signup">
+                    <Register goPath={goPath}/>
+                </Route>
+                <Route path="/signin">
+                    <Login setIsLoggedIn={setIsLoggedIn} setEmail={setEmail} goPath={goPath}/>
+                </Route>
+            </Switch>
+        </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
+);
+//ReactDOM.render(<Login setIsLoggedIn={setIsLoggedIn} setEmail={setEmail} goPath={goPath}/>, document.getElementById("root"));
+//ReactDOM.render(<Register goPath={goPath}/>, document.getElementById("root"));
