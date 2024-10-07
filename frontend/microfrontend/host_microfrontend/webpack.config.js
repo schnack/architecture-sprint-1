@@ -7,7 +7,7 @@ module.exports = {
     entry: './src/index',
     mode: 'development',
     devServer: {
-        static: path.join(__dirname, 'public'),
+        static: path.join(__dirname, 'dist'),
         port: 3001,
         headers: {
             "Access-Control-Allow-Origin": "*",

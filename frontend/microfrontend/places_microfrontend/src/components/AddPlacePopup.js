@@ -4,7 +4,7 @@ import '../vendor/fonts.css';
 import '../vendor/normalize.css';
 import '../styles/popup/popup.css';
 import '../styles/popup/_is-opened/popup_is-opened.css'
-import api from "host_microfrontend/src/utils/api";
+import api from "../utils/api";
 
 const PopupWithForm = React.lazy(() => import('shared_microfrontend/PopupWithForm').catch(() => {
     return { default: () => <div className='error'>Component is not available!</div> };

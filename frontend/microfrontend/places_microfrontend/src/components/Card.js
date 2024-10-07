@@ -3,7 +3,7 @@ import React from 'react';
 import '../styles/card/card.css';
 
 import { CurrentUserContext } from 'shared-context_shared-library';
-import api from "host_microfrontend/src/utils/api";
+import api from "../utils/api";
 
 
 // Карточка фотографии места. Содержит фотографию, описание и количество лайков
