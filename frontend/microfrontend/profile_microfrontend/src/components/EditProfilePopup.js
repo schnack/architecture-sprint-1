@@ -4,21 +4,16 @@ import { CurrentUserContext } from 'shared-context_shared-library';
 
 import '../styles/popup/popup.css';
 import '../styles/popup/_is-opened/popup_is-opened.css'
+import api from "host_microfrontend/src/utils/api";
 
-const PopupWithForm = React.lazy(() => import("shared_microfrontend/PopupWithForm"));
+const PopupWithForm = React.lazy(() => import('shared_microfrontend/PopupWithForm').catch(() => {
+    return { default: () => <div className='error'>Component is not available!</div> };
+  })
+);
 
-
-function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
+function EditProfilePopup({ isOpen, setCurrentUser, onClose }) {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
-
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -29,13 +24,26 @@ function EditProfilePopup({ isOpen, onUpdateUser, onClose }) {
     }
   }, [currentUser]);
 
+  function handleNameChange(e) {
+    setName(e.target.value);
+  }
+
+  function handleDescriptionChange(e) {
+    setDescription(e.target.value);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-
-    onUpdateUser({
-      name,
-      about: description,
-    });
+    api
+      .setUserInfo({
+        name,
+        about: description,
+      })
+      .then((newUserData) => {
+        setCurrentUser(newUserData);
+        onClose();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

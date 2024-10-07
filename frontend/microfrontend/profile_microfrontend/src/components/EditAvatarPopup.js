@@ -2,19 +2,31 @@ import React from 'react';
 
 import '../styles/popup/popup.css';
 import '../styles/popup/_is-opened/popup_is-opened.css'
+import api from "host_microfrontend/src/utils/api";
 
-const PopupWithForm = React.lazy(() => import("shared_microfrontend/PopupWithForm"));
+const PopupWithForm = React.lazy(() => import('shared_microfrontend/PopupWithForm').catch(() => {
+    return { default: () => <div className='error'>Component is not available!</div> };
+  })
+);
 
-
-function EditAvatarPopup({ isOpen, onUpdateAvatar, onClose }) {
+// Попап обновления аватара
+// isOpen - показывать попап
+// setCurrentUser - обновление текущего пользователя
+// onClose - закрытие попапа
+function EditAvatarPopup({ isOpen, setCurrentUser, onClose }) {
   const inputRef = React.useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    onUpdateAvatar({
-      avatar: inputRef.current.value,
-    });
+    api
+      .setUserAvatar({
+        avatar: inputRef.current.value,
+      })
+      .then((newUserData) => {
+        setCurrentUser(newUserData);
+        onClose();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

@@ -5,49 +5,29 @@ import EditProfilePopup from "./EditProfilePopup";
 
 import '../styles/profile/profile.css';
 
-function Profile({onAddPlace}) {
-    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-        React.useState(false);
-    const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-        React.useState(false);
+function Profile({setCurrentUser, onAddPlace}) {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
+      React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+      React.useState(false);
 
 
-    function closeAllPopups() {
-        setIsEditProfilePopupOpen(false);
-        setIsEditAvatarPopupOpen(false);
-    }
+  function closeAllPopups() {
+      setIsEditProfilePopupOpen(false);
+      setIsEditAvatarPopupOpen(false);
+  }
 
-    function handleEditProfileClick() {
-        setIsEditProfilePopupOpen(true);
-    }
+  function handleEditProfileClick() {
+      setIsEditProfilePopupOpen(true);
+  }
 
-    function handleEditAvatarClick() {
-        setIsEditAvatarPopupOpen(true);
-    }
-
-    function handleUpdateUser(userUpdate) {
-        // api
-        //     .setUserInfo(userUpdate)
-        //     .then((newUserData) => {
-        //         setCurrentUser(newUserData);
-        //         closeAllPopups();
-        //     })
-        //     .catch((err) => console.log(err));
-    }
-
-    function handleUpdateAvatar(avatarUpdate) {
-        // api
-        //     .setUserAvatar(avatarUpdate)
-        //     .then((newUserData) => {
-        //         setCurrentUser(newUserData);
-        //         closeAllPopups();
-        //     })
-        //     .catch((err) => console.log(err));
-    }
+  function handleEditAvatarClick() {
+      setIsEditAvatarPopupOpen(true);
+  }
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  const imageStyle = { backgroundImage: `url(${currentUser.avatar})` };
+  const imageStyle = currentUser.avatar !== undefined? { backgroundImage: `url(${currentUser.avatar})` }: {};
 
   return (
       <>
@@ -63,12 +43,12 @@ function Profile({onAddPlace}) {
 
           <EditProfilePopup
               isOpen={isEditProfilePopupOpen}
-              onUpdateUser={handleUpdateUser}
+              setCurrentUser={setCurrentUser}
               onClose={closeAllPopups}
           />
           <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}
-              onUpdateAvatar={handleUpdateAvatar}
+              setCurrentUser={setCurrentUser}
               onClose={closeAllPopups}
           />
       </>
