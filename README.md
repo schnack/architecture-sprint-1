@@ -3,6 +3,7 @@
 ## Запуск приложения
 
 ```bash
+cd frontend/microfrontend
 npm run build
 npm run start
 ```
