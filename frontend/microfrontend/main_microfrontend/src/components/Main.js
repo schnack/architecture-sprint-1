@@ -2,23 +2,37 @@ import React from 'react';
 
 import '../styles/content/content.css';
 
-const Profile = React.lazy(() => import("profile_microfrontend/Profile"));
-const Places = React.lazy(() => import("places_microfrontend/Places"));
+const Profile = React.lazy(() => import('profile_microfrontend/Profile').catch(() => {
+    return { default: () => <div className='error'>Component is not available!</div> };
+  })
+);
+const Places = React.lazy(() => import('places_microfrontend/Places').catch(() => {
+    return { default: () => <div className='error'>Component is not available!</div> };
+  })
+);
+const AddPlacePopup = React.lazy(() => import('places_microfrontend/AddPlacePopup').catch(() => {
+    return { default: () => <div className='error'>Component is not available!</div> };
+  })
+);
 
 
+function Main({ setCurrentUser, cards, setCards }) {
 
-function Main({ cards, goPath }) {
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
 
-  function onAddPlace(b) {}
+  function showAddPlace() {
+    setIsAddPlacePopupOpen(true);
+  }
 
-  function onCardClick(b) {}
-  function onCardLike(b) {}
-  function onCardDelete(b) {}
+  function closeAllPopups() {
+    setIsAddPlacePopupOpen(false);
+  }
 
   return (
     <main className="content">
-      <Profile onAddPlace={onAddPlace} />
-      <Places cards={cards} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
+      <Profile setCurrentUser={setCurrentUser} onAddPlace={showAddPlace} />
+      <Places cards={cards} setCards={setCards} />
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} cards={cards} setCards={setCards} onClose={closeAllPopups} />
     </main>
   );
 }
