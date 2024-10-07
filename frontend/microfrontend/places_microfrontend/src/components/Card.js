@@ -21,10 +21,15 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
+  // Если текущий пользователь уже поставил лайк
   const isLiked = card.likes.some(i => i._id === currentUser._id);
+  // Стиль отображает нажатие лайка
   const cardLikeButtonClassName = `card__like-button ${isLiked && 'card__like-button_is-active'}`;
 
+  // Если текущий пользователь является владельцем изображения
   const isOwn = card.owner._id === currentUser._id;
+
+  // Отображение кнопки удаления изображения
   const cardDeleteButtonClassName = (
     `card__delete-button ${isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'}`
   );
