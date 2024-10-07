@@ -1,14 +1,5 @@
 # Задание 1
 
-## Запуск приложения
-
-```bash
-cd frontend/microfrontend
-npm run build
-npm run start
-```
-Далее открываем в браузере ссылку http://localhost:3001
-
 ## Анализ монолита
 
 - index.js - основной загрузчик приложения
@@ -135,3 +126,18 @@ Module Federation повторно не загружает общие завис
 #### shared-library
 Общая библиотека разделяющая контекст с контекстом текущего пользователя. В примерах module federation контекст помещают
 в общую зависимость
+
+
+## Запуск приложения (Уровень 3)
+
+```bash
+cd frontend/microfrontend
+npm run build
+npm run start
+```
+Далее открываем в браузере ссылку http://localhost:3001
+
+
+# Задание 2
+
+Схема задания 2 [here](arch_template_task2.drawio)
