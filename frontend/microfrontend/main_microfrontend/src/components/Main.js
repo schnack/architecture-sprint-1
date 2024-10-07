@@ -1,23 +1,24 @@
 import React from 'react';
-import { CurrentUserContext } from 'shared-context_shared-library';
 
 import '../styles/content/content.css';
 
 const Profile = React.lazy(() => import("profile_microfrontend/Profile"));
+const Places = React.lazy(() => import("places_microfrontend/Places"));
 
 
 
-function Main({ goPath }) {
-  const currentUser = React.useContext(CurrentUserContext);
-
-  const imageStyle = { backgroundImage: `url(${currentUser.avatar})` };
+function Main({ cards, goPath }) {
 
   function onAddPlace(b) {}
+
+  function onCardClick(b) {}
+  function onCardLike(b) {}
+  function onCardDelete(b) {}
 
   return (
     <main className="content">
       <Profile onAddPlace={onAddPlace} />
-      <h1 style={{color:"white"}}>{currentUser.name}</h1>
+      <Places cards={cards} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
     </main>
   );
 }

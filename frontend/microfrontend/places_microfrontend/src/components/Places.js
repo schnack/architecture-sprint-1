@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from './Card';
 
+import '../styles/places/places.css';
+
 function Places({ cards, onCardClick, onCardLike, onCardDelete }) {
   return (
       <section className="places page__section">

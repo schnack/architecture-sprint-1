@@ -53,6 +53,7 @@ module.exports = {
             },
             remotes: {
                 profile_microfrontend: "profile_microfrontend@http://localhost:3005/remoteEntry.js",
+                places_microfrontend: "places_microfrontend@http://localhost:3006/remoteEntry.js",
             },
             shared: {
                 react: { singleton: true },

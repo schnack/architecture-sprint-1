@@ -158,6 +158,7 @@ function App() {
             exact
             path="/"
             component={Main}
+            cards={cards}
             goPath={goPath}
             loggedIn={isLoggedIn}
           />

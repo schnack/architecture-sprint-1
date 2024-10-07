@@ -7,7 +7,7 @@ module.exports = {
     mode: 'development',
     devServer: {
         static: path.join(__dirname, 'public'),
-        port: 3005,
+        port: 3006,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
@@ -18,6 +18,11 @@ module.exports = {
         publicPath: 'auto',
     },
     devtool: 'cheap-module-source-map',
+    resolve: {
+        alias: {
+            'shared-context_shared-library': path.resolve(__dirname, '../shared-library'),
+        },
+    },
     module: {
         rules: [
             {
@@ -45,8 +50,20 @@ module.exports = {
             filename: 'remoteEntry.js',
             exposes: {
                 './Places': './src/components/Places',
+                './AddPlacePopup': './src/components/AddPlacePopup',
             },
-            shared: { react: { singleton: true }, 'react-dom': { singleton: true }, 'react-router-dom': { singleton: true }},
+            remotes: {
+                shared_microfrontend: "shared_microfrontend@http://localhost:3004/remoteEntry.js",
+            },
+            shared: {
+                react: { singleton: true },
+                'react-dom': { singleton: true },
+                'react-router-dom': { singleton: true },
+                'shared-context_shared-library': {
+                    import: 'shared-context_shared-library',
+                    requiredVersion: require('../shared-library/package.json').version,
+                },
+            },
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
