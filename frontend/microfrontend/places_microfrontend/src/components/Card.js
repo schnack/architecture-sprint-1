@@ -3,36 +3,60 @@ import React from 'react';
 import '../styles/card/card.css';
 
 import { CurrentUserContext } from 'shared-context_shared-library';
+import api from "host_microfrontend/src/utils/api";
 
-function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  const cardStyle = { backgroundImage: `url(${card.link})` };
 
-  function handleClick() {
-    onCardClick(card);
-  }
-
-  function handleLikeClick() {
-    onCardLike(card);
-  }
-
-  function handleDeleteClick() {
-    onCardDelete(card);
-  }
+// Карточка фотографии места. Содержит фотографию, описание и количество лайков
+// card - текущая карта для отображения
+// onCardClick - функция вызова попапа для отображения картинки в полном размере
+// setCard - обновление состояния карточек
+function Card({ card, onCardClick, setCards}) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
+  // ===== Хелперы
   // Если текущий пользователь уже поставил лайк
   const isLiked = card.likes.some(i => i._id === currentUser._id);
-  // Стиль отображает нажатие лайка
-  const cardLikeButtonClassName = `card__like-button ${isLiked && 'card__like-button_is-active'}`;
-
   // Если текущий пользователь является владельцем изображения
   const isOwn = card.owner._id === currentUser._id;
 
+
+  // ===== Стили
+  // Стиль отображает нажатие лайка
+  const cardLikeButtonClassName = `card__like-button ${isLiked && 'card__like-button_is-active'}`;
+  const cardStyle = { backgroundImage: `url(${card.link})` };
   // Отображение кнопки удаления изображения
   const cardDeleteButtonClassName = (
     `card__delete-button ${isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'}`
   );
+
+  // ===== Обработчики кнопок
+  // Отображение карты в полном размере
+  function handleClick() {
+    onCardClick(card);
+  }
+
+  // Удаление загруженной карты
+  function handleDeleteClick() {
+    api
+      .removeCard(card._id)
+      .then(() => {
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // Обработчик лайков
+  function handleLikeClick() {
+    api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((cards) =>
+          cards.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <li className="places__item card">

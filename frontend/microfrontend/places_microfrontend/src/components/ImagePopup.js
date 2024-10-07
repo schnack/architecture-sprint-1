@@ -3,6 +3,9 @@ import React from 'react';
 import '../styles/popup/popup.css';
 import '../styles/popup/_is-opened/popup_is-opened.css'
 
+// Попап отображения фотографии в полном размере
+// card - объект карточки
+// onClose - функция закрытия popup
 function ImagePopup({ card, onClose }) {
   return (
     <div className={`popup popup_type_image ${card ? 'popup_is-opened' : ''}`}>

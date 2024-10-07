@@ -2,11 +2,20 @@ import React from 'react';
 
 import '../styles/popup/popup.css';
 import '../styles/popup/_is-opened/popup_is-opened.css'
+import api from "host_microfrontend/src/utils/api";
 
-const PopupWithForm = React.lazy(() => import("shared_microfrontend/PopupWithForm"));
+const PopupWithForm = React.lazy(() => import('shared_microfrontend/PopupWithForm').catch(() => {
+    return { default: () => <div className='error'>Component is not available!</div> };
+  })
+);
 
-
-function AddPlacePopup({ isOpen, onAddPlace, onClose }) {
+// Форма добавления новой фотографии
+// isOpen - отображать попап?
+// cards - текущий список карт
+// setCards - обновление списка карт
+// onClose - Скрывает попап
+function AddPlacePopup({ isOpen, cards, setCards, onClose }) {
+  // Поля формы
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
@@ -18,19 +27,20 @@ function AddPlacePopup({ isOpen, onAddPlace, onClose }) {
     setLink(e.target.value);
   }
 
+  // Добавляет новую карту
   function handleSubmit(e) {
     e.preventDefault();
-
-    onAddPlace({
-      name,
-      link
-    });
+    api
+      .addCard({name, link})
+      .then((newCardFull) => {
+        setCards([newCardFull, ...cards]);
+        onClose();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
-    <PopupWithForm
-      isOpen={isOpen} onSubmit={handleSubmit} onClose={onClose} title="Новое место" name="new-card"
-    >
+    <PopupWithForm isOpen={isOpen} onSubmit={handleSubmit} onClose={onClose} title="Новое место" name="new-card">
       <label className="popup__label">
         <input type="text" name="name" id="place-name"
                className="popup__input popup__input_type_card-name" placeholder="Название"
