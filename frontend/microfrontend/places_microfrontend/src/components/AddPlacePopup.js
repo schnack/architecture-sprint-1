@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../vendor/fonts.css';
+import '../vendor/normalize.css';
 import '../styles/popup/popup.css';
 import '../styles/popup/_is-opened/popup_is-opened.css'
 import api from "host_microfrontend/src/utils/api";

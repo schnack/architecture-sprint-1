@@ -5,7 +5,10 @@ import * as auth from "../utils/auth.js";
 
 import InfoTooltip from "./InfoTooltip";
 
+import '../vendor/fonts.css';
+import '../vendor/normalize.css';
 import '../styles/auth-form/auth-form.css'
+
 
 function Register ({ goPath }){
 

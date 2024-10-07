@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../vendor/fonts.css';
+import '../vendor/normalize.css';
 import '../styles/content/content.css';
 
 const Profile = React.lazy(() => import('profile_microfrontend/Profile').catch(() => {

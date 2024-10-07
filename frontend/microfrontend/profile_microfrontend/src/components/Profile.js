@@ -3,6 +3,8 @@ import { CurrentUserContext } from 'shared-context_shared-library';
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 
+import '../vendor/fonts.css';
+import '../vendor/normalize.css';
 import '../styles/profile/profile.css';
 
 function Profile({setCurrentUser, onAddPlace}) {

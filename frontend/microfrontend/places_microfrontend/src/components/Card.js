@@ -10,7 +10,7 @@ import api from "host_microfrontend/src/utils/api";
 // card - текущая карта для отображения
 // onCardClick - функция вызова попапа для отображения картинки в полном размере
 // setCard - обновление состояния карточек
-function Card({ card, onCardClick, setCards}) {
+function Card({ card, onCardClick, setCards, onDeleteCard}) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -38,12 +38,7 @@ function Card({ card, onCardClick, setCards}) {
 
   // Удаление загруженной карты
   function handleDeleteClick() {
-    api
-      .removeCard(card._id)
-      .then(() => {
-        setCards((cards) => cards.filter((c) => c._id !== card._id));
-      })
-      .catch((err) => console.log(err));
+    onDeleteCard(card);
   }
 
   // Обработчик лайков
