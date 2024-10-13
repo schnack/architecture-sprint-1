@@ -1,0 +1,23 @@
+{
+  "name": "module-federation",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "host_microfrontend",
+      "auth_microfrontend",
+      "shared_microfrontend",
+      "main_microfrontend",
+      "profile_microfrontend",
+      "places_microfrontend",
+      "shared-library"
+    ]
+  },
+  "scripts": {
+    "start": "lerna run --parallel start",
+    "build": "npm install && lerna run build"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
